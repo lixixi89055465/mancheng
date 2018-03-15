@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bizvane.ishop.dao.CorpMapper">
+
+    <select id="selectByCorpId" resultType="com.bizvane.ishop.entity.Corp">
+        SELECT *
+        FROM def_corp
+        WHERE 1=1
+        <if test="corp_id != 0">
+            AND id = #{corp_id}
+        </if>
+        <if test="corp_code != null and corp_code !=''">
+            AND corp_code = #{corp_code}
+        </if>
+    </select>
+
+    <select id="selectAllCorp" resultType="com.bizvane.ishop.entity.Corp">
+        SELECT *
+        FROM def_corp
+        WHERE 1 = 1
+        <if test="search_value != null and search_value !=''">
+            AND
+            (
+            corp_name LIKE concat('%', #{search_value},'%')
+            OR corp_code LIKE concat('%', #{search_value},'%')
+            OR address LIKE concat('%', #{search_value},'%')
+            OR contact LIKE concat('%', #{search_value},'%')
+            OR contact_phone LIKE concat('%', #{search_value},'%')
+            )
+        </if>
+        ORDER BY id DESC
+    </select>
+
+    <insert id="insertCorp" parameterType="com.bizvane.ishop.entity.Corp">
+        insert into DEF_CORP
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="corp_name != null">
+                CORP_NAME,
+            </if>
+            <if test="corp_code != null">
+                CORP_CODE,
+            </if>
+            <if test="address != null">
+                ADDRESS,
+            </if>
+            <if test="contact != null">
+                CONTACT,
+            </if>
+            <if test="contact_phone != null">
+                CONTACT_PHONE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="corp_name != null">
+                #{corp_name},
+            </if>
+            <if test="corp_code != null">
+                #{corp_code},
+            </if>
+            <if test="address != null">
+                #{address},
+            </if>
+            <if test="contact != null">
+                #{contact},
+            </if>
+            <if test="contact_phone != null">
+                #{contact_phone},
+            </if>
+        </trim>
+
+    </insert>
+
+    <update id="updateByCorpId" parameterType="com.bizvane.ishop.entity.Corp">
+        UPDATE DEF_CORP
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="corp_name != null">
+                corp_name = #{corp_name},
+            </if>
+            <if test="corp_code != null">
+                corp_code = #{corp_code},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="contact != null">
+                contact = #{contact},
+            </if>
+            <if test="contact_phone != null">
+                contact_phone = #{contact_phone},
+            </if>
+        </trim>
+        WHERE ID = #{id};
+    </update>
+
+    <delete id="deleteByCorpId">
+        delete from
+        DEF_CORP
+        where ID = #{id}
+    </delete>
+
+</mapper>
