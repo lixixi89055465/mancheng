@@ -12,7 +12,8 @@ public interface CorpMapper {
     //所有企业
     List<Corp> selectAllCorp(@Param("search_value") String search_value) throws SQLException;
 
-    Corp selectByCorpId(@Param("corp_id") int corp_id, @Param("corp_code") String corp_code,@Param("isactive") String isactive) throws SQLException;
+    // 李祥测试
+    Corp selectByCorpId(@Param("corp_id") int corp_id, @Param("corp_code") String corp_code, @Param("isactive") String isactive) throws SQLException;
 
     int insertCorp(Corp record) throws SQLException;
 
